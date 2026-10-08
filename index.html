@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Page 1: Hero Section -->
+    <div class="page active" id="page1">
+        <section class="hero">
+            <div class="photo-frame">
+                <img src="./images/img1.jpeg" alt="Birthday Person">
+            </div>
+            <h1>Happy Birthday!</h1>
+            <h2>( Tubiii )</h2>
+            <p>
+                Today is your special day! 🎉<br>
+                May this new year of your life be filled with love, happiness, and all your dreams come true!
+            </p>
+            <button class="wish-btn" onclick="goToPage(2)">Next ➡️</button>
+        </section>
+    </div>
+
+    <!-- Page 2: Cake Section -->
+    <div class="page" id="page2">
+        <section class="cake-section">
+            <h2>Click each candle to light it! 🕯️</h2>
+                <div class="cake">
+                <div class="cake-layer"></div>
+                <div class="cake-layer"></div>
+                <div class="cake-base"></div>
+                <div class="candle"></div>
+                <div class="candle"></div>
+                <div class="candle"></div>
+                <!-- Flames with unique IDs -->
+                <div class="flame" id="flame1"></div>
+                <div class="flame" id="flame2"></div>
+                <div class="flame" id="flame3"></div>
+            </div>
+            <div class="btn-container">
+                <button class="wish-btn" onclick="lightCandles()">Let's Celebrate! ✨</button>
+                <button class="wish-btn" onclick="goToPage(3)">Next ➡️</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Page 3: Gallery Section -->
+    <div class="page" id="page3">
+        <section class="gallery">
+            <h2>Beautiful Memories 📸</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="./images/img2.jpeg" alt="Photo 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="./images/img3.jpeg" alt="Photo 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="./images/img4.jpeg" alt="Photo 3">
+                </div>
+                <div class="gallery-item">
+                    <img src="./images/img5.jpeg" alt="Photo 4">
+                </div>
+            </div>
+            <button class="wish-btn" onclick="goToPage(4)" style="margin-top:30px;">Next ➡️</button>
+        </section>
+    </div>
+
+    <!-- Page 4: Message Section -->
+    <div class="page" id="page4">
+        <section class="message-section">
+            <div class="message-card">
+                <h2>A Special Message For You 💕</h2>
+                <p id="special-msg" class="special-message">
+                   Dear Tubiii ,<br>
+                    Happy Birthday to my most favorite person and my forever best friend! 
+                    🥹❤️. I'm so lucky to have someone like you in my life who understands me, 
+                    supports me, listens to all my nonsense, and still chooses to stay 😂💕. May 
+                    Allah bless you with endless happiness, success, good health, and everything 
+                    your heart wishes for 🤲✨. I hope this new year of your life brings you 
+                    countless beautiful memories, lots of smiles, and all the happiness you truly 
+                    deserve. Thank you for being there through my good and bad days. No matter how 
+                    much life changes, I hope our friendship always stays the same 🫶🏻💗. 
+                    Love you always! ❤️<br>
+                    Happy Birthday once again, bestie! 🎂🎈
+                </p>
+                <div class="btn-container">
+                    <button class="wish-btn" onclick="showMessage()">Read Your Message 💌</button>
+                    <button class="wish-btn" onclick="goToPage(1)">Start Again 🔄</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="page" id="page4">
+    <footer>
+        Made with ❤️ by <span>Your Name</span>
+    </footer>
+  
+    <script>
+        var currentPage = 1;
+
+        function goToPage(pageNum){
+            document.getElementById('page' + currentPage).classList.remove('active');
+            currentPage = pageNum;
+            document.getElementById('page' + pageNum).classList.add('active');
+            
+            // Show confetti on last page
+            if (pageNum === 4) {
+                setTimeout(function() { createConfetti(); }, 500);
+            }
+            
+            // Reset candle flames when going to cake page
+            if (pageNum === 2) {
+                var flames = document.querySelectorAll('.flame');
+                flames.forEach(function(flame) {
+                    flame.classList.remove('active');
+                });
+            }
+            
+            // Reset message when going to message page
+            if (pageNum === 4) {
+                var msg = document.getElementById('special-msg');
+                msg.classList.remove('show');
+            }
+        }
+
+        function lightCandles() {
+            var flame1 = document.getElementById('flame1');
+            var flame2 = document.getElementById('flame2');
+            var flame3 = document.getElementById('flame3');
+            flame1.classList.add('active');
+            flame2.classList.add('active');
+            flame3.classList.add('active');
+            setTimeout(function() {
+                createConfetti();
+            }, 500);
+        }
+
+        function createConfetti() {
+            var colors = ['#ff6b6b', '#ff8e8e', '#ffd700', '#87ceeb', '#98fb98', '#dda0dd'];
+            
+            for (var i = 0; i < 150; i++) {
+                setTimeout(function() {
+                    var confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    if (Math.random() > 0.5) {
+                        confetti.style.borderRadius = '50%';
+                    }
+                    
+                    confetti.style.width = Math.random() * 10 + 5 + 'px';
+                    confetti.style.height = confetti.style.width;
+                    
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(function() {
+                        confetti.remove();
+                    }, 4000);
+                }, i * 30);
+            }
+        }
+
+        function showMessage() {
+            var msg = document.getElementById('special-msg');
+            msg.classList.add('show');
+            createConfetti();
+        }
+
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                createConfetti();
+            }, 2000);
+        });
+    </script>
+
+</body>
+</html>
